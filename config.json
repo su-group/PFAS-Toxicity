@@ -1,0 +1,85 @@
+{
+    "DATA_CONFIG": {
+        "data_dir": "data",
+        "csv_file": "ldtoxdb-raw.csv",
+        "smiles_col": "SMILES",
+        "label_col": "NeglogLD50",
+        "batch_size": 32,
+        "test_size": 0.1,
+        "val_size": 0.1,
+        "random_state": 42,
+        "normalize_labels": true,
+        "max_atoms": 512
+    },
+    "MODEL_CONFIG": {
+        "model_type": "GIN",
+        "supported_types": ["GNN", "GAT", "GIN", "Transformer", "JKNet"],
+        "params": {
+            "hidden_dim": 256,
+            "num_layers": 8,
+            "dropout": 0.2,
+            "prediction_tasks": 1
+        },
+        "type_specific_params": {
+            "GAT": {
+                "num_heads": 4
+            },
+            "Transformer": {
+                "num_heads": 4
+            },
+            "JKNet": {
+                "jk_mode": "cat"
+            },
+            "GNN": {
+                "model_type": "GCN"
+            }
+        }
+    },
+    "TRAINING_CONFIG": {
+        "epochs": 1000,
+        "learning_rate": 0.001,
+        "weight_decay": 1e-05,
+        "checkpoint_interval": 10,
+         "device": "cuda"
+    },
+    "EVALUATION_CONFIG": {
+        "metrics": ["mae", "rmse", "r2"]
+    },
+    "TRANSFER_CONFIG": {
+        "pretrained_model_path": "outputs/pretrained_best_model.pth",
+        "layers_to_freeze": [],
+        "partial_transfer": true
+    },
+    "SEMI_SUPERVISED_CONFIG": {
+        "model_type": "GNN",
+        "train_ratio": 0.1,
+        "val_ratio": 0.1,
+        "epochs": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.0005
+    },
+    "EXPLAINER_CONFIG": {
+        "model_path": "F:\\GNN-pro\\outputs\\GIN_1000_251021\\pretrained_best_model.pth",
+        "model_type": "GIN",
+        "data_path": null,
+        "smiles_list": ["C(F)(F)(S(O)(=O)=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F"],
+        "save_dir": "explanations",
+        "num_epochs": 200
+    },
+    "VISUALIZATION_CONFIG": {
+        "figure_dpi": 300,
+        "figure_formats": ["png"]
+    },
+    "LOGGING_CONFIG": {
+        "log_level": "INFO"
+    },
+    "PREDICT_EVALUATE_CONFIG": {
+        "model_path": null,
+        "data_path": null,
+        "mode": "predict",
+        "smiles_list": [],
+        "save_visualization": false,
+        "visualization_path": "evaluation_results.png",
+        "model_type": "GNN"
+    }
+}

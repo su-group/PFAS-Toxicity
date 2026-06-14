@@ -1,0 +1,66 @@
+{
+  "DATA_CONFIG": {
+    "data_dir": "data",
+    "csv_file": "Labeled-Gap-IsoelectronicSubstitution.csv",
+    "smiles_col": "SMILES",
+    "label_col": "Gap(eV)",
+    "batch_size": 32,
+    "test_size": 0.1,
+    "val_size": 0.1,
+    "random_state": 42,
+    "normalize_labels": true,
+    "max_atoms": 512
+  },
+  "MODEL_CONFIG": {
+    "default_type": "GNN",
+    "supported_types": [
+      "GNN",
+      "GAT",
+      "GIN",
+      "Transformer",
+      "JKNet"
+    ],
+    "params": {
+      "hidden_dim": 256,
+      "num_layers": 8,
+      "dropout": 0.2,
+      "prediction_tasks": 1
+    },
+    "type_specific_params": {
+      "GAT": {
+        "num_heads": 4
+      },
+      "Transformer": {
+        "num_heads": 4
+      },
+      "JKNet": {
+        "jk_mode": "cat"
+      },
+      "GNN": {
+        "model_type": "GCN"
+      }
+    }
+  },
+  "TRAINING_CONFIG": {
+    "epochs": 1000,
+    "learning_rate": 0.001,
+    "weight_decay": 1e-05,
+    "checkpoint_interval": 50
+  },
+  "EVALUATION_CONFIG": {
+    "metrics": [
+      "mae",
+      "rmse",
+      "r2"
+    ]
+  },
+  "VISUALIZATION_CONFIG": {
+    "figure_dpi": 300,
+    "figure_formats": [
+      "png"
+    ]
+  },
+  "LOGGING_CONFIG": {
+    "log_level": "INFO"
+  }
+}
